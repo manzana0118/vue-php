@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "vue": "^3.2.13"
+    "jquery": "^3.6.0",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.14",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -34,6 +37,10 @@
     },
     "rules": {}
   },
+
+  "eslint.workingDirectories": [
+    {"mode": "auto"}    
+  ],
   "browserslist": [
     "> 1%",
     "last 2 versions",
