@@ -5,6 +5,8 @@ import UpdateView from '@/pages/UpdateView.vue';
 import DeleteView from '@/pages/DeleteView.vue';
 import ListView from '@/pages/ListView.vue';
 import AboutView from '@/pages/AboutView.vue';
+import DetailView from '@/pages/DetailView.vue';
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -28,6 +30,11 @@ const router = createRouter({
             path: '/delete',
             name: 'Delete',
             component: DeleteView
+        },
+        {
+            path: '/detail/:id',
+            name: 'Detail',
+            component: DetailView
         },
         {
             path: '/list',
