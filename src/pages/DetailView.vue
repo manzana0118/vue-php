@@ -8,9 +8,9 @@
                 <h4 class="card-title">{{todo.title}}</h4>
                 <p class="card-text">{{todo.body}}</p>
                 <div class="btn-group" role="group" aria-label="">
-                    <button type="button" class="btn btn-primary">편집</button>
-                    <button type="button" class="btn btn-danger">삭제</button>
-                    <button type="button" class="btn btn-secondary">이전</button>
+                    <button type="button" class="btn btn-primary" @click="editTodo(todo.id)">수정</button>
+                    <button type="button" class="btn btn-danger" @click="deleteTodo(todo.id)">삭제</button>
+                    <button type="button" class="btn btn-secondary" @click="moveList()">목록</button>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
 
 <script>
 import { reactive } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
     export default {
         setup() {
             const route = useRoute();
@@ -45,9 +45,45 @@ import { useRoute } from 'vue-router';
             }
             getInfo();
 
+            // 할일 삭제 
+            const router = useRouter();
+            const deleteTodo = (_id) => {
+                // console.log(_id);
+                fetch(`http://webd2020.dothome.co.kr/data_delete.php?id=${_id}`)
+                .then(res => res.json())
+                .then(data => {
+                    if(data.result == 1) {
+                        router.push({
+                            name: 'List'
+                        });
+                    }else{
+                        console.log('삭제에 실패했습니다');
+                    }        
+                })
+                .catch()
+            }
+                        
+            // 수정하기
+            const editTodo = (_id) => {
+                router.push({
+                    name: 'Update',
+                    params: { id: _id }
+                });
+            }
+
+            // 목록으로 이동
+            const moveList = () => {
+                router.push({
+                    name: 'Create'
+                });
+            }
+
             return{
                 getInfo,
-                todo
+                todo,
+                deleteTodo,
+                editTodo,
+                moveList
             }
         }
     }

@@ -2,12 +2,12 @@
   <div class=container>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <router-link to="/" class="nav-link">Home</router-link>
-            <router-link to="/create" class="nav-link">Create</router-link> 
-            <router-link to="/list" class="nav-link">List</router-link> 
-            <router-link to="/about" class="nav-link">About</router-link>
+            <router-link :to="{name:'Home'}" class="nav-link">Home</router-link>
+            <router-link :to="{name:'Create'}" class="nav-link">Create</router-link> 
+            <router-link :to="{name:'List'}" class="nav-link">List</router-link> 
+            <router-link :to="{name:'About'}" class="nav-link">About</router-link>
         </div>
-    </nav>
+      </nav>
     <router-view/>
   </div> 
   
