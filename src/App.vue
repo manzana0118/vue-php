@@ -9,17 +9,40 @@
         </div>
       </nav>
     <router-view/>
+    <!-- 안내창 -->
+        <ToastBox 
+            :message="toastMessage" 
+            v-if="toastShow" 
+        />
   </div> 
   
 </template>
 
 
 <script>
+import ToastBox from '@/components/ToastBox.vue'
+import { useToast } from '@/composables/toast.js'
+
 export default {
   name: 'App',
   components: {
+    ToastBox
+  },
+  setup() {
 
+    const {
+      toastMessage,
+      toastShow,
+      triggerToast
+    } = useToast();
+
+    return {
+        toastMessage,
+        toastShow,
+        triggerToast
+    }
   }
+  
 }
 </script>
 

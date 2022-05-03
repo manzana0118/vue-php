@@ -2,25 +2,48 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                Todo Detail Edit
+                Todo Detail Info
             </div>
             <div class="card-body">
-                <h4 class="card-title">{{todo.title}}</h4>
-                <p class="card-text">{{todo.body}}</p>
+                <h3>제목</h3>
+                <h4 class="card-title">
+                    {{todo.title}}
+                </h4>
+                <br/>
+                <h3>내용</h3>
+                <p class="card-text">
+                    {{todo.body}}
+                </p>
+                <br/>
+                <h3>완료여부</h3>
+                <p class="card-text">
+                    {{todo.complete === '0' ? '진행중' : '완료'}}
+                </p>
                 <div class="btn-group" role="group" aria-label="">
                     <button type="button" class="btn btn-primary" @click="editTodo(todo.id)">수정</button>
-                    <button type="button" class="btn btn-danger" @click="deleteTodo(todo.id)">삭제</button>
+                    <button type="button" class="btn btn-danger" @click="openModal(todo.id)">삭제</button>
                     <button type="button" class="btn btn-secondary" @click="moveList()">목록</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 경고창 -->
+    <ModalWindow
+        v-if="showModal"
+        @close="closeModal()"
+        @delete="deleteTodo()"
+    />
 </template>
 
 <script>
-import { reactive } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import ModalWindow from '@/components/ModalWindow.vue'
+
     export default {
+        components: {
+            ModalWindow
+        },
         setup() {
             const route = useRoute();
             // 타이틀
@@ -30,7 +53,6 @@ import { useRoute, useRouter } from 'vue-router';
                 id: 0,
                 complete: 0
             });
-            console.log(route.params.id);
             // 아이디를 전달하고 자료를 받아온다.
             const getInfo = () => {
                 fetch(`http://manzana.dothome.co.kr/data_read_id.php?id=${route.params.id}`)
@@ -47,9 +69,8 @@ import { useRoute, useRouter } from 'vue-router';
 
             // 할일 삭제 
             const router = useRouter();
-            const deleteTodo = (_id) => {
-                // console.log(_id);
-                fetch(`http://webd2020.dothome.co.kr/data_delete.php?id=${_id}`)
+            const deleteTodo = () => {
+                fetch(`http://manzana.dothome.co.kr/data_delete.php?id=${deleteId.value}`)
                 .then(res => res.json())
                 .then(data => {
                     if(data.result == 1) {
@@ -78,17 +99,41 @@ import { useRoute, useRouter } from 'vue-router';
                 });
             }
 
+            // 모달이 보여지는 상태를 저장한다.
+            const showModal = ref(false);
+            // 선택된 아이디를 저장한다.
+            const deleteId = ref(null);
+            const closeModal = () => {
+                // 모달창 숨기기
+                showModal.value = false;
+                deleteId.value = null;
+            }
+
+            // 모달창 보여주기
+            const openModal = (_id) => {
+                // 삭제해야 하는 아이디 저장
+                deleteId.value = _id;
+                // 모달을 보여주고
+                showModal.value = true;
+            }
+
             return{
                 getInfo,
                 todo,
                 deleteTodo,
                 editTodo,
-                moveList
+                moveList,
+                closeModal,
+                openModal,
+                showModal
             }
         }
     }
 </script>
 
 <style>
-
+h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
 </style>

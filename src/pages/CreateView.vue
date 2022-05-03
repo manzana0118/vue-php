@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="card">
+        <div class="card mt-3">
             <div class="card-header">
                 Todo Create
             </div>
@@ -28,8 +28,10 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useToast } from '@/composables/toast.js'
+
     export default {
         setup(){
             const router = useRouter();
@@ -40,7 +42,24 @@ import { useRouter } from 'vue-router'
                 body: ''
             });
 
+            // 안내창
+            const {
+                toastMessage,
+                toastShow,
+                triggerToast
+            } = useToast();
+
             const onSubmit = () => {
+                // 제목 없으면 생성 금지
+                if (!todo.title) {
+                    triggerToast('제목을 입력하세요.');
+                    return;
+                }
+                // 내용이 없으면 생성 금지
+                if (!todo.body) {
+                    triggerToast('내용을 입력하세요.');
+                    return;
+                }
                 fetch(`http://manzana.dothome.co.kr/data_add.php?title=${todo.title}&body=${todo.body}`)
                 .then(res => res.json())
                 .then(data => {
@@ -59,14 +78,17 @@ import { useRouter } from 'vue-router'
             // 목록으로 이동
             const moveList = () => {
                 router.push({
-                    name: 'Create'
+                    name: 'List'
                 });
             }
 
             return {
                 todo,
                 onSubmit,
-                moveList
+                moveList,
+                toastMessage,
+                toastShow,
+                triggerToast
             }
         }
     }
