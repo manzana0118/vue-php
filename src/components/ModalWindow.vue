@@ -1,19 +1,24 @@
 <template>
+<!-- Modal 윈도우 -->
     <div class="modal-wrap">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Todo Delete</h5>
+                    <h5 class="modal-title">
+                        <slot name="title"></slot>
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="onClose">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>내용을 삭제하시겠습니까?</p>
+                    <p>
+                        <slot name="body"></slot>
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" @click="onDelete">확인</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="onClose">취소</button>
+                    <button type="button" class="btn btn-secondary" @click="onClose">취소</button>
                 </div>
             </div>
         </div>

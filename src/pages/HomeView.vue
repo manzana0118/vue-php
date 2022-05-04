@@ -1,6 +1,7 @@
 <template>
-    <div class=container>
+    <div class="container">
         <h1>HomePage</h1>
+        <h3>Hello, This is a Todo List App that I worked hard on.</h3>
     </div>
 </template>
 
@@ -11,5 +12,7 @@ export default {
 </script>
 
 <style>
-
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 </style>

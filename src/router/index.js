@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from '@/pages/HomeView.vue';
 import CreateView from '@/pages/CreateView.vue';
 import UpdateView from '@/pages/UpdateView.vue';
-import DeleteView from '@/pages/DeleteView.vue';
 import ListView from '@/pages/ListView.vue';
 import AboutView from '@/pages/AboutView.vue';
 import DetailView from '@/pages/DetailView.vue';
@@ -12,37 +11,32 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: '/',
+            path: '/vue-php/',
             name: 'Home',
             component: HomeView
         },
         {
-            path: '/create',
+            path: '/vue-php/create',
             name: 'Create',
             component: CreateView
         },
         {
-            path: '/update',
+            path: '/vue-php/update/:id',
             name: 'Update',
             component: UpdateView
         },
         {
-            path: '/delete',
-            name: 'Delete',
-            component: DeleteView
-        },
-        {
-            path: '/detail/:id',
+            path: '/vue-php/detail/:id',
             name: 'Detail',
             component: DetailView
         },
         {
-            path: '/list',
+            path: '/vue-php/list',
             name: 'List',
             component: ListView
         },
         {
-            path: '/about',
+            path: '/vue-php/about',
             name: 'About',
             component: AboutView
         }

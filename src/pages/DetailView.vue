@@ -27,22 +27,28 @@
             </div>
         </div>
     </div>
+    <teleport to="#popup">
     <!-- 경고창 -->
-    <ModalWindow
-        v-if="showModal"
-        @close="closeModal()"
-        @delete="deleteTodo()"
-    />
+        <ModalWin 
+            v-if="showModal"
+            @close="closeModal"
+            @delete="deleteTodo"
+        >
+            <template v-slot:title>할일삭제</template>
+            <template v-slot:body>정말 할일을 삭제하시겠습니까?</template>
+        </ModalWin>
+    </teleport> 
+
 </template>
 
 <script>
 import { reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import ModalWindow from '@/components/ModalWindow.vue'
+import ModalWin from '@/components/ModalWindow.vue';
 
     export default {
-        components: {
-            ModalWindow
+        components : {
+            ModalWin
         },
         setup() {
             const route = useRoute();
@@ -95,7 +101,7 @@ import ModalWindow from '@/components/ModalWindow.vue'
             // 목록으로 이동
             const moveList = () => {
                 router.push({
-                    name: 'Create'
+                    name: 'List'
                 });
             }
 
